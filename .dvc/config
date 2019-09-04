@@ -1,0 +1,4 @@
+['remote "storage"']
+url = https://remote.dvc.org/get-started
+[core]
+remote = storage
