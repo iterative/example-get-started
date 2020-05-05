@@ -1,0 +1,30 @@
+stages:
+  featurize:
+    cmd: python src/featurization.py data/prepared data/features
+    deps:
+    - data/prepared
+    - src/featurization.py
+    outs:
+    - data/features
+  evaluate:
+    cmd: python src/evaluate.py model.pkl data/features auc.metric
+    deps:
+    - data/features
+    - model.pkl
+    - src/evaluate.py
+    metrics_no_cache:
+    - auc.metric
+  prepare:
+    cmd: python src/prepare.py data/data.xml
+    deps:
+    - data/data.xml
+    - src/prepare.py
+    outs:
+    - data/prepared
+  train:
+    cmd: python src/train.py data/features model.pkl
+    deps:
+    - data/features
+    - src/train.py
+    outs:
+    - model.pkl

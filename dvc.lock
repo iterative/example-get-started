@@ -1,0 +1,42 @@
+featurize:
+  cmd: python src/featurization.py data/prepared data/features
+  deps:
+  - path: data/prepared
+    md5: 6836f797f3924fb46fcfd6b9f6aa6416.dir
+  - path: src/featurization.py
+    md5: ef70c6c0fbf4107fdab468af66333f48
+  outs:
+  - path: data/features
+    md5: 42c7025fc0edeb174069280d17add2d4.dir
+evaluate:
+  cmd: python src/evaluate.py model.pkl data/features auc.metric
+  deps:
+  - path: data/features
+    md5: 42c7025fc0edeb174069280d17add2d4.dir
+  - path: model.pkl
+    md5: 662eb7f64216d9c2c1088d0a5e2c6951
+  - path: src/evaluate.py
+    md5: fea9c7bb1242b5e43d682c5d43e7c1d1
+  outs:
+  - path: auc.metric
+    md5: 0eaa29dc9b8c89bb9ba1348b3c3cc772
+prepare:
+  cmd: python src/prepare.py data/data.xml
+  deps:
+  - path: data/data.xml
+    md5: a304afb96060aad90176268345e10355
+  - path: src/prepare.py
+    md5: 1a18704abffac804adf2d5c4549f00f7
+  outs:
+  - path: data/prepared
+    md5: 6836f797f3924fb46fcfd6b9f6aa6416.dir
+train:
+  cmd: python src/train.py data/features model.pkl
+  deps:
+  - path: data/features
+    md5: 42c7025fc0edeb174069280d17add2d4.dir
+  - path: src/train.py
+    md5: d05e0201a3fb47c878defea65bd85e4d
+  outs:
+  - path: model.pkl
+    md5: 662eb7f64216d9c2c1088d0a5e2c6951
