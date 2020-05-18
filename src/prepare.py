@@ -8,7 +8,7 @@ import errno
 
 if len(sys.argv) != 2:
     sys.stderr.write('Arguments error. Usage:\n')
-    sys.stderr.write('\tpython prepare.py data\n')
+    sys.stderr.write('\tpython prepare.py data-file\n')
     sys.exit(1)
 
 # Test data set split ratio
