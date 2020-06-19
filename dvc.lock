@@ -12,3 +12,31 @@ prepare:
   outs:
   - path: data/prepared
     md5: 20b786b6e6f80e2b3fcf17827ad18597.dir
+featurize:
+  cmd: python src/featurization.py data/prepared data/features
+  deps:
+  - path: data/prepared
+    md5: 20b786b6e6f80e2b3fcf17827ad18597.dir
+  - path: src/featurization.py
+    md5: 02180903aa05599ceaa6ff6ee2471d00
+  params:
+    params.yaml:
+      featurize.max_features: 500
+      featurize.ngrams: 1
+  outs:
+  - path: data/features
+    md5: 00db872eebe1c914dd13617616bb8586.dir
+train:
+  cmd: python src/train.py data/features model.pkl
+  deps:
+  - path: data/features
+    md5: 00db872eebe1c914dd13617616bb8586.dir
+  - path: src/train.py
+    md5: ad8e71b2cca4334a7d3bb6495645068c
+  params:
+    params.yaml:
+      train.n_estimators: 50
+      train.seed: 20170428
+  outs:
+  - path: model.pkl
+    md5: 98af33933679a75c2a51b953d3ab50aa
