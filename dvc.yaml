@@ -29,3 +29,17 @@ stages:
     - train.seed
     outs:
     - model.pkl
+  evaluate:
+    cmd: python src/evaluate.py model.pkl data/features scores.json prc.json
+    deps:
+    - data/features
+    - model.pkl
+    - src/evaluate.py
+    metrics:
+    - scores.json:
+        cache: false
+    plots:
+    - prc.json:
+        cache: false
+        x: recall
+        y: precision
