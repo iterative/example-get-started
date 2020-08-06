@@ -1,0 +1,20 @@
+name: report-status
+
+on: [push, pull_request]
+
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml-py3:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate report
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          dvc plots show --show-vega prc.json > vega.json
+          vl2png vega.json prc.png
+
+          echo "## Metrics report" > report.md
+          cml-publish prc.png --md >> report.md
+          cml-send-comment report.md
