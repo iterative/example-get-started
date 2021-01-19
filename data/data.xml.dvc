@@ -9,4 +9,4 @@ outs:
 - md5: a304afb96060aad90176268345e10355
   size: 37891850
   path: data.xml
-  desc: 'Main dataset'
+  desc: Main dataset
