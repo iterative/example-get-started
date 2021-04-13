@@ -71,7 +71,7 @@ up a "local remote" on your file system:
 > the DVC project.
 
 ```console
-$ mkdir -P /tmp/dvc-storage
+$ mkdir -p /tmp/dvc-storage
 $ dvc remote add local /tmp/dvc-storage
 ```
 
@@ -102,7 +102,7 @@ playground ready.
   [`dvc run`](https://man.dvc.org/run). It transforms XML data into TSV.
 - `7-ml-pipeline`: Feature extraction and train stages created. It takes data in
   TSV format and produces two `.pkl` files that contain serialized feature
-  matrices. Tain runs random forest classifier and creates the `model.pkl` file.
+  matrices. Train runs random forest classifier and creates the `model.pkl` file.
 - `8-evaluation`: Evaluation stage. Runs the model on a test dataset to produce
   its performance AUC value. The result is dumped into a DVC metric file so that
   we can compare it with other experiments later.
