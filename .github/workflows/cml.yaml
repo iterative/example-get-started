@@ -1,0 +1,19 @@
+name: CML Report
+on: [push, pull_request]
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    container: docker://dvcorg/cml:0-dvc2-base1
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate metrics report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # generate plots
+          dvc plots show --show-vega prc.json > vega.json
+          vl2svg vega.json prc.svg
+
+          echo "## Metrics report" > report.md
+          cml-publish prc.svg --title "Precision & Recall" --md >> report.md
+          cml-send-comment report.md
