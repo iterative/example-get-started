@@ -30,52 +30,52 @@ stages:
       size: 2391
     params:
       params.yaml:
-        featurize.max_features: 1500
+        featurize.max_features: 3000
         featurize.ngrams: 2
     outs:
     - path: data/features
-      md5: f237c73d43f87f84081796e3c0e22e37.dir
-      size: 10896707
+      md5: 52c1fddf9b7b11dff75bffbeff7958d3.dir
+      size: 12730163
       nfiles: 2
   train:
     cmd: python src/train.py data/features model.pkl
     deps:
     - path: data/features
-      md5: f237c73d43f87f84081796e3c0e22e37.dir
-      size: 10896707
+      md5: 52c1fddf9b7b11dff75bffbeff7958d3.dir
+      size: 12730163
       nfiles: 2
     - path: src/train.py
       md5: 9ab95496b29b6ea3418bbf20b9fe3473
       size: 964
     params:
       params.yaml:
-        train.min_split: 2
-        train.n_est: 50
+        train.min_split: 64
+        train.n_est: 100
         train.seed: 20170428
     outs:
     - path: model.pkl
-      md5: 17b3d1efc339b416c4b5615b1ce1b97e
-      size: 2712300
+      md5: 484fab565aec49c5f704a3783235d237
+      size: 2206748
   evaluate:
     cmd: python src/evaluate.py model.pkl data/features scores.json prc.json roc.json
     deps:
     - path: data/features
-      md5: f237c73d43f87f84081796e3c0e22e37.dir
-      size: 10896707
+      md5: 52c1fddf9b7b11dff75bffbeff7958d3.dir
+      size: 12730163
       nfiles: 2
     - path: model.pkl
-      md5: 17b3d1efc339b416c4b5615b1ce1b97e
-      size: 2712300
+      md5: 484fab565aec49c5f704a3783235d237
+      size: 2206748
     - path: src/evaluate.py
       md5: fb7b5209c9237ea6cf63550e5fe9b817
       size: 1943
     outs:
     - path: prc.json
-      md5: 1fa4c43c7074dbf9911c720ccc7b06b7
-      size: 3658
+      md5: 2acb90f3ea12e111a21683cf7dd2518a
+      size: 135186
     - path: roc.json
-      md5: fd10900b1f6bac3b17ca4200d059cd17
-      size: 3451
+      md5: 44a785a4f66a37100f99ffbbf8d15de9
+      size: 55101
     - path: scores.json
-      md5: e5c014ba1c0a1c94c04088cfff47a639
+      md5: 8f7ae54edbbe9a222b693bce8985cb80
       size: 73
