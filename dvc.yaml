@@ -28,6 +28,10 @@ stages:
     - train.min_split
     - train.n_est
     - train.seed
+    - otherparams.yaml
+      - test
+    - nested/params.yaml
+      - test
     outs:
     - model.pkl
   evaluate:
