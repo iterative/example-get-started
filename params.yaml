@@ -10,3 +10,15 @@ train:
   seed: 20170428
   n_est: 100
   min_split: 64
+
+nested1:
+  nested2:
+    nested3:
+      nested4:
+        nested5:
+          nested6:
+            nested7: 1234
+      nested4b:
+        nested5b:
+          nested6b: 5678
+        nested5b2: 8765
