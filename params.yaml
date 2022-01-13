@@ -11,14 +11,16 @@ train:
   n_est: 100
   min_split: 64
 
+outlier: 1
 nested1:
+  doubled: "first instance!"
   nested2:
+    other: "share params?"
     nested3:
       nested4:
         nested5:
           nested6:
-            nested7: 1234
-      nested4b:
+            nested7: "Lucky!"
         nested5b:
-          nested6b: 5678
-        nested5b2: 8765
+            nested6: "Wow!!!!!!!!!!!!!!!!!!!!"
+            doubled: "second instance!"
