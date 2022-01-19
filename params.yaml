@@ -14,10 +14,13 @@ train:
 outlier: 1
 nested1:
   doubled: "first instance!"
+  value: "Another one!"
   nested2:
     other: "share params?"
     nested3:
+      value: "Another one!"
       nested4:
+        value: "Another one!"
         nested5:
           nested6:
             nested7: "Lucky!"
