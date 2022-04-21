@@ -1,4 +1,6 @@
 [core]
-    remote = storage
+    remote = local
 ['remote "storage"']
     url = https://remote.dvc.org/get-started
+['remote "local"']
+    url = /tmp/dvc-storage
