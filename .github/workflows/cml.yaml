@@ -1,27 +1,49 @@
-name: CML Report
-on: push
+name: your-workflow-name
+on: [push]
 jobs:
   run:
-    runs-on: [ubuntu-latest]
-    container: docker://dvcorg/cml:0-dvc2-base1
+    runs-on: ubuntu-latest
+    # optionally use a convenient Ubuntu LTS + DVC + CML image
+    # container: docker://ghcr.io/iterative/cml:0-dvc2-base1
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Generate metrics report
-        env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # may need to setup NodeJS & Python3 on e.g. self-hosted
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: '16'
+      # - uses: actions/setup-python@v2
+      #   with:
+      #     python-version: '3.x'
+      - uses: iterative/setup-cml@v1
+      - name: Train model
         run: |
-          echo "# CML Report" > report.md
+          # Your ML workflow goes here
+          pip install -r requirements.txt
+          dvc exp run
+          
+          dvc exp list --names-only | while read -r expname ; do \
+            dvc exp pull origin ${expname} \
+          done
 
-          echo "## Plots" >> report.md
-          dvc plots diff bigrams-experiment workspace \
-            --show-vega --targets prc.json > vega.json
-          vl2svg vega.json prc.svg
-          cml-publish prc.svg --title "Precision & Recall" --md >> report.md
+      # - name: Write CML report
+      #   env:
+      #     REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   run: |
+      #     # Post reports as comments in GitHub PRs
+      #     cat results.txt >> report.md
+      #     cml-send-comment report.md
 
-          echo "## Metrics" >> report.md
-          echo "### bigrams-experiment → workspace" >> report.md
-          dvc metrics diff bigrams-experiment --show-md >> report.md
 
-          cml-send-comment report.md
+      #     echo "# CML Report" > report.md
+
+      #     echo "## Plots" >> report.md
+      #     dvc plots diff bigrams-experiment workspace \
+      #       --show-vega --targets prc.json > vega.json
+      #     vl2svg vega.json prc.svg
+      #     cml-publish prc.svg --title "Precision & Recall" --md >> report.md
+
+      #     echo "## Metrics" >> report.md
+      #     echo "### bigrams-experiment → workspace" >> report.md
+      #     dvc metrics diff bigrams-experiment --show-md >> report.md
+
+      #     cml-send-comment report.md
