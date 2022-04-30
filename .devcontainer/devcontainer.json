@@ -1,0 +1,8 @@
+{
+  "name": "experiments-get-started",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "extensions": ["Iterative.dvc"],
+  "postCreateCommand": "pip3 install --user -r src/requirements.txt"
+}
