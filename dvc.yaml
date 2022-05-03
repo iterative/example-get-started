@@ -30,3 +30,27 @@ stages:
     - train.seed
     outs:
     - model.pkl
+  evaluate:
+    cmd: python src/evaluate.py model.pkl data/features
+    deps:
+    - data/features
+    - model.pkl
+    - src/evaluate.py
+    metrics:
+    - evaluation.json:
+        cache: false
+    plots:
+    - evaluation/importance.png
+    - evaluation/plots/confusion_matrix.json:
+        cache: false
+        template: confusion
+        x: actual
+        y: predicted
+    - evaluation/plots/precision_recall.json:
+        cache: false
+        x: recall
+        y: precision
+    - evaluation/plots/roc.json:
+        cache: false
+        x: fpr
+        y: tpr
