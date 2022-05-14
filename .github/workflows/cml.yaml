@@ -1,0 +1,39 @@
+name: CML Report
+on: push
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: iterative/setup-cml@v1
+      - uses: iterative/setup-dvc@v1
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - name: Generate metrics report
+        env:
+          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cml ci
+          if [ $GITHUB_REF = refs/heads/main ]; then
+            PREVIOUS_REF=HEAD~1
+          else
+            PREVIOUS_REF=main
+          fi
+
+          echo "# CML Report" > report.md
+          echo "## Plots" >> report.md
+          dvc plots diff $PREVIOUS_REF workspace \
+            --show-vega --targets evaluation/plots/precision_recall.json > vega.json
+          vl2svg vega.json prc.svg
+          cml publish prc.svg --title "Precision & Recall" --md >> report.md
+
+          dvc plots diff $PREVIOUS_REF workspace \
+            --show-vega --targets evaluation/plots/confusion_matrix.json > vega.json
+          vl2svg vega.json confusion.svg
+          cml publish confusion.svg --title "Confusion Matrix" --md >> report.md
+
+          echo "## Metrics and Params" >> report.md
+          echo "### $PREVIOUS_REF → workspace" >> report.md
+          dvc exp diff $PREVIOUS_REF --show-md >> report.md
+
+          cml send-comment report.md
