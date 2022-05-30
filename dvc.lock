@@ -31,57 +31,63 @@ stages:
     params:
       params.yaml:
         featurize.max_features: 200
-        featurize.ngrams: 2
+        featurize.ngrams: 1
     outs:
     - path: data/features
-      md5: f35d4cc2c552ac959ae602162b8543f3.dir
-      size: 2232588
+      md5: 4e53ee86d6393fa83e69e04fb67d8057.dir
+      size: 2090442
       nfiles: 2
   train:
-    cmd: python src/train.py data/features model.pkl
+    cmd: python src/train.py data/features model
     deps:
     - path: data/features
-      md5: f35d4cc2c552ac959ae602162b8543f3.dir
-      size: 2232588
+      md5: 4e53ee86d6393fa83e69e04fb67d8057.dir
+      size: 2090442
       nfiles: 2
     - path: src/train.py
-      md5: c3961d777cfbd7727f9fde4851896006
-      size: 967
+      md5: ba77b061fc7967455cff3bd92b654a52
+      size: 954
     params:
       params.yaml:
         train.min_split: 0.01
         train.n_est: 50
         train.seed: 20170428
     outs:
-    - path: model.pkl
-      md5: 46865edbf3d62fc5c039dd9d2b0567a4
-      size: 1763725
+    - path: model
+      md5: e14989b7a1e73ede2428df056f8e97ab
+      size: 1817446
+    - path: model.mlem
+      md5: 8afdb0b5917909adf605643eacf95b51
+      size: 828
   evaluate:
-    cmd: python src/evaluate.py model.pkl data/features
+    cmd: python src/evaluate.py model data/features
     deps:
     - path: data/features
-      md5: f35d4cc2c552ac959ae602162b8543f3.dir
-      size: 2232588
+      md5: 4e53ee86d6393fa83e69e04fb67d8057.dir
+      size: 2090442
       nfiles: 2
-    - path: model.pkl
-      md5: 46865edbf3d62fc5c039dd9d2b0567a4
-      size: 1763725
+    - path: model
+      md5: e14989b7a1e73ede2428df056f8e97ab
+      size: 1817446
+    - path: model.mlem
+      md5: 8afdb0b5917909adf605643eacf95b51
+      size: 828
     - path: src/evaluate.py
-      md5: 44e714021a65edf881b1716e791d7f59
-      size: 2346
+      md5: 6eb6829f45a1509c2ccc9ae0a52fc2b3
+      size: 2334
     outs:
     - path: evaluation.json
-      md5: 099ba05938dcee126403b109f3ce793f
+      md5: dc23a8f1faf5563f159e8938521961de
       size: 73
     - path: evaluation/importance.png
-      md5: 3c00de7be61ab7ebd141e68510f2757d
-      size: 34065
+      md5: 448f9ac84f1405213e26ae6e138e247e
+      size: 32254
     - path: evaluation/plots/confusion_matrix.json
-      md5: 86c0c21030f85476b76de983d70effb1
+      md5: f52306df6496374d06002284a9ad6f52
       size: 122246
     - path: evaluation/plots/precision_recall.json
-      md5: 819d0ad9bba6dd0e5ca76d4706f45da3
-      size: 150773
+      md5: 6b165ec8f51e5352a106be7a216ade86
+      size: 151771
     - path: evaluation/plots/roc.json
-      md5: 6ff55945578272fc388e662680855e59
-      size: 40653
+      md5: 53f16fdd9c432ff69248c4900584ac60
+      size: 41991

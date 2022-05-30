@@ -6,9 +6,10 @@ import sys
 
 import pandas as pd
 from sklearn import metrics
-from sklearn import tree
 from dvclive import Live
 from matplotlib import pyplot as plt
+
+from mlem.api import load
 
 
 live = Live("evaluation")
@@ -21,15 +22,13 @@ if len(sys.argv) != 3:
 model_file = sys.argv[1]
 matrix_file = os.path.join(sys.argv[2], "test.pkl")
 
-with open(model_file, "rb") as fd:
-    model = pickle.load(fd)
-
 with open(matrix_file, "rb") as fd:
     matrix, feature_names = pickle.load(fd)
 
 labels = matrix[:, 1].toarray().astype(int)
 x = matrix[:, 2:]
 
+model = load(model_file)
 predictions_by_class = model.predict_proba(x)
 predictions = predictions_by_class[:, 1]
 

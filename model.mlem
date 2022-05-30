@@ -1,0 +1,44 @@
+artifacts:
+  data:
+    hash: e14989b7a1e73ede2428df056f8e97ab
+    size: 1817446
+    uri: model
+model_type:
+  methods:
+    predict:
+      args:
+      - name: data
+        type_:
+          type: unspecified
+      name: predict
+      returns:
+        type: unspecified
+    predict_proba:
+      args:
+      - name: data
+        type_:
+          type: unspecified
+      name: predict_proba
+      returns:
+        type: unspecified
+    sklearn_predict:
+      args:
+      - name: X
+        type_:
+          type: unspecified
+      name: predict
+      returns:
+        type: unspecified
+    sklearn_predict_proba:
+      args:
+      - name: X
+        type_:
+          type: unspecified
+      name: predict_proba
+      returns:
+        type: unspecified
+  type: sklearn
+object_type: model
+requirements:
+- module: sklearn
+  version: 1.1.1

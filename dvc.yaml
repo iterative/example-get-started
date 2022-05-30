@@ -20,7 +20,7 @@ stages:
     outs:
     - data/features
   train:
-    cmd: python src/train.py data/features model.pkl
+    cmd: python src/train.py data/features model
     deps:
     - data/features
     - src/train.py
@@ -29,12 +29,15 @@ stages:
     - train.n_est
     - train.seed
     outs:
-    - model.pkl
+    - model
+    - model.mlem:
+        cache: false
   evaluate:
-    cmd: python src/evaluate.py model.pkl data/features
+    cmd: python src/evaluate.py model data/features
     deps:
     - data/features
-    - model.pkl
+    - model
+    - model.mlem
     - src/evaluate.py
     metrics:
     - evaluation.json:
