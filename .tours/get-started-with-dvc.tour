@@ -1,0 +1,77 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "Get Started with DVC",
+  "steps": [
+    {
+      "file": "dvc.yaml",
+      "description": "# dvc.yaml\n\n[dvc.yaml](https://dvc.org/doc/user-guide/project-structure/dvcyaml-files) files are used to define the data science or machine learning pipeline(s) of a project. \n\nAll stage-based features such as [dvc params](https://dvc.org/doc/command-reference/params), [dvc metrics](https://dvc.org/doc/command-reference/metrics), and [dvc plots](https://dvc.org/doc/command-reference/plots) are specified here.",
+      "line": 1
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Stages\n\nStages form a pipeline when they connect with each other.\n\nHere `prepare` is a simple stage.",
+      "line": 2
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Cmd\n\nThe `prepare` stage runs the `src/prepare.py` script to prepare `data/data.xml`.",
+      "line": 3
+    },
+    {
+      "file": "src/prepare.py",
+      "description": "# Cmd\n\n`src/prepare.py` is a normal python script which splits `data/data.xml` into train and test datasets.",
+      "line": 1
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Deps\n\n`src/prepare.py` and `data/data.xml` are marked as dependencies of the `prepare` stage.\n\nThis is because this stage uses both of these files.\n\nDVC will check whether they have changed to decide whether the stage requires re-execution. ",
+      "line": 4
+    },
+    {
+      "file": "data/data.xml.dvc",
+      "description": "# Deps\n\n`data/data.xml` is tracked by a [.dvc file](https://dvc.org/doc/user-guide/project-structure/dvc-files#dvc-files).\n\nThese [.dvc files](https://dvc.org/doc/user-guide/project-structure/dvc-files#dvc-files) are data placeholders that can be versioned with Git.\n\nThey contain the information needed to track the target data over time.",
+      "line": 1
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Params\n\n`prepare.seed`and `prepare.split` are the input parameters for the stage.\n\nThey are defined in the (default) `params.yaml` file.",
+      "line": 7
+    },
+    {
+      "file": "params.yaml",
+      "description": "# Params\n\nThis is an example of a [parameters file](https://dvc.org/doc/user-guide/project-structure/dvcyaml-files#parameters-files).\n\nIn this project all of the pipeline's parameters can be found in this file.\n\nParameter files can be versioned directly with Git along with other workspace files.",
+      "line": 1
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Outs\n\n`src/prepare` is marked as an output of the `prepare` stage.\n\nThis is because the data in `src/prepare` is produced by this stage.",
+      "line": 10
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Outs\n\n`src/prepare` is marked as an input of the `featurize` stage.\n\nThis is a simple example of how stages fit together inside of a larger pipeline.",
+      "line": 15
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Cmd\n\nWhen executing the pipeline DVC will only need to run this cmd if any of the deps or params for the `featurized` stage have changed.\n\nIf the stage has been executed previously with the current combination of deps and params then it can be skipped.",
+      "line": 13
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Metrics\n\nLike common output files, metrics and plots files are produced by the stage cmd. However, their purpose is different. Typically they contain metadata to evaluate pipeline processes.",
+      "line": 39
+    },
+    {
+      "file": "evaluation.json",
+      "description": "# Metrics\n\nHere we can see the `evaluate` stage has recorded `avg_prec` and `roc_auc` in this file.",
+      "line": 1
+    },
+    {
+      "file": "dvc.yaml",
+      "description": "# Finally\n\nThat concludes the tour.\n\nPlease see the [User Guide on dvc.org](https://dvc.org/doc/user-guide) for more comprehensive documentation.",
+      "line": 57
+    }
+  ],
+  "ref": "demo-codetour"
+}
