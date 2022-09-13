@@ -3,6 +3,6 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "extensions": ["Iterative.dvc"],
+  "extensions": ["Iterative.dvc", "ms-python.python", "vsls-contrib.codetour"],
   "postCreateCommand": "pip3 install --user -r src/requirements.txt"
 }
