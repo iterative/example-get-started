@@ -30,19 +30,19 @@ stages:
       size: 2490
     params:
       params.yaml:
-        featurize.max_features: 200
+        featurize.max_features: 300
         featurize.ngrams: 2
     outs:
     - path: data/features
-      md5: f35d4cc2c552ac959ae602162b8543f3.dir
-      size: 2232588
+      md5: 5a04ed36f17a49d4067636cb1f2f48ee.dir
+      size: 2629300
       nfiles: 2
   train:
     cmd: python src/train.py data/features model.pkl
     deps:
     - path: data/features
-      md5: f35d4cc2c552ac959ae602162b8543f3.dir
-      size: 2232588
+      md5: 5a04ed36f17a49d4067636cb1f2f48ee.dir
+      size: 2629300
       nfiles: 2
     - path: src/train.py
       md5: c3961d777cfbd7727f9fde4851896006
@@ -50,38 +50,38 @@ stages:
     params:
       params.yaml:
         train.min_split: 0.01
-        train.n_est: 50
+        train.n_est: 150
         train.seed: 20170428
     outs:
     - path: model.pkl
-      md5: 46865edbf3d62fc5c039dd9d2b0567a4
-      size: 1763725
+      md5: dc0a0d0dee3e94e62188fde352b3ac35
+      size: 5261791
   evaluate:
     cmd: python src/evaluate.py model.pkl data/features
     deps:
     - path: data/features
-      md5: f35d4cc2c552ac959ae602162b8543f3.dir
-      size: 2232588
+      md5: 5a04ed36f17a49d4067636cb1f2f48ee.dir
+      size: 2629300
       nfiles: 2
     - path: model.pkl
-      md5: 46865edbf3d62fc5c039dd9d2b0567a4
-      size: 1763725
+      md5: dc0a0d0dee3e94e62188fde352b3ac35
+      size: 5261791
     - path: src/evaluate.py
       md5: 44e714021a65edf881b1716e791d7f59
       size: 2346
     outs:
     - path: evaluation.json
-      md5: 099ba05938dcee126403b109f3ce793f
+      md5: 4ab472a16a99d9830f46d76534ff0105
       size: 73
     - path: evaluation/importance.png
-      md5: 3c00de7be61ab7ebd141e68510f2757d
-      size: 34065
+      md5: ba18a9beb91c9e3aa33a2571f9981b8b
+      size: 34464
     - path: evaluation/plots/confusion_matrix.json
-      md5: 86c0c21030f85476b76de983d70effb1
+      md5: 737f3a8d0d5e0bebc25f0427648d4b0b
       size: 122246
     - path: evaluation/plots/precision_recall.json
-      md5: 819d0ad9bba6dd0e5ca76d4706f45da3
-      size: 150773
+      md5: d1379b925db56ef57c34c4e31b864d7e
+      size: 101248
     - path: evaluation/plots/roc.json
-      md5: 6ff55945578272fc388e662680855e59
-      size: 40653
+      md5: 6b94f3f846fcea72547d420ea2217544
+      size: 32807
