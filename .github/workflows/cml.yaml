@@ -8,6 +8,7 @@ jobs:
       - uses: iterative/setup-dvc@v1
       - uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.pull_request.head.sha }}
           fetch-depth: 2
       - name: Generate metrics report
         env:
@@ -25,15 +26,15 @@ jobs:
           dvc plots diff $PREVIOUS_REF workspace \
             --show-vega --targets evaluation/plots/precision_recall.json > vega.json
           vl2svg vega.json prc.svg
-          cml publish prc.svg --title "Precision & Recall" --md >> report.md
+          echo '![Precision & Recall](./prc.svg)' >> report.md
 
           dvc plots diff $PREVIOUS_REF workspace \
             --show-vega --targets evaluation/plots/confusion_matrix.json > vega.json
           vl2svg vega.json confusion.svg
-          cml publish confusion.svg --title "Confusion Matrix" --md >> report.md
+          echo '![Confusion Matrix](./confusion.svg)' >> report.md
 
           echo "## Metrics and Params" >> report.md
           echo "### $PREVIOUS_REF → workspace" >> report.md
           dvc exp diff $PREVIOUS_REF --show-md >> report.md
 
-          cml send-comment report.md
+          cml comment create --publish --pr report.md
