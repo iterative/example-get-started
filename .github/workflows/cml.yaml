@@ -1,5 +1,5 @@
 name: CML Report
-on: push
+on: [push, pull_request]
 jobs:
   run:
     runs-on: [ubuntu-latest]
@@ -14,10 +14,10 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cml ci
-          if [ $GITHUB_REF = refs/heads/main ]; then
-            PREVIOUS_REF=HEAD~1
-          else
+          if test ${{ github.event_name }} = pull_request; then
             PREVIOUS_REF=main
+          else
+            PREVIOUS_REF=HEAD~1
           fi
 
           dvc plots diff $PREVIOUS_REF workspace \
@@ -42,3 +42,6 @@ jobs:
           EOF
 
           cml comment create --publish --pr=false report.md
+          if test ${{ github.event_name }} = pull_request; then
+            cml comment create --publish --pr report.md
+          fi
