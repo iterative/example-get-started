@@ -43,7 +43,8 @@ jobs:
           ${dvc_report}
           EOF
 
-          cml comment create --publish --pr=false report.md
           if test ${{ github.event_name }} = pull_request; then
-            cml comment create --publish --pr report.md
+            cml comment update --publish --pr report.md
+          else
+            cml comment create --publish report.md
           fi
