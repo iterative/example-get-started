@@ -16,6 +16,7 @@ jobs:
           cml ci
           if test ${{ github.event_name }} = pull_request; then
             PREVIOUS_REF=main
+            git fetch --depth=1 origin $PREVIOUS_REF:$PREVIOUS_REF
           else
             PREVIOUS_REF=HEAD~1
           fi
