@@ -1,5 +1,8 @@
 name: CML Report
-on: [push, pull_request]
+on:
+  push:
+    branches: [main]
+  pull_request:
 jobs:
   run:
     runs-on: [ubuntu-latest]
@@ -44,7 +47,7 @@ jobs:
           EOF
 
           if test ${{ github.event_name }} = pull_request; then
-            cml comment update --publish --pr report.md
+            cml comment update --pr report.md
           else
-            cml comment create --publish report.md
+            cml comment create report.md
           fi
