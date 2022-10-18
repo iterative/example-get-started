@@ -2,7 +2,7 @@ name: CML Report
 on: [push, pull_request]
 concurrency:
   group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
-  cancel-in-progress: ${{ github.event_name == 'push' }}
+  cancel-in-progress: true
 jobs:
   run:
     runs-on: [ubuntu-latest]
