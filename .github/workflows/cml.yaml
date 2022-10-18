@@ -1,8 +1,5 @@
 name: CML Report
-on:
-  push:
-    branches: [main]
-  pull_request:
+on: [push, pull_request]
 jobs:
   run:
     runs-on: [ubuntu-latest]
@@ -12,17 +9,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 2
-          ref: ${{ github.event.pull_request.head.sha || github.ref }}
+          ref: ${{ github.head_ref || github.ref }}
       - name: Generate metrics report
         env:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cml ci
-          if test ${{ github.event_name }} = pull_request; then
+          if test $GITHUB_REF = refs/heads/main; then
+            PREVIOUS_REF=HEAD~1
+          else
             PREVIOUS_REF=main
             git fetch --depth=1 origin $PREVIOUS_REF:$PREVIOUS_REF
-          else
-            PREVIOUS_REF=HEAD~1
           fi
 
           dvc plots diff $PREVIOUS_REF workspace \
