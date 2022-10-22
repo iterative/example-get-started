@@ -6,7 +6,7 @@ concurrency:
 jobs:
   run:
     continue-on-error: ${{ github.ref_name != 'main' }}
-    runs-on: [ubuntu-latest]
+    runs-on: ubuntu-latest
     steps:
       - uses: iterative/setup-cml@v1
       - uses: iterative/setup-dvc@v1
@@ -19,7 +19,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cml ci
-          if test $GITHUB_REF = refs/heads/main; then
+          if test ${{ github.ref_name }} = main; then
             PREVIOUS_REF=HEAD~1
           else
             PREVIOUS_REF=main
