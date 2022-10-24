@@ -19,7 +19,7 @@ jobs:
           REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cml ci
-          if test ${{ github.ref_name }} = main; then
+          if test $GITHUB_REF_NAME == main; then
             PREVIOUS_REF=HEAD~1
           else
             PREVIOUS_REF=main
