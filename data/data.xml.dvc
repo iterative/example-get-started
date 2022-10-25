@@ -1,5 +1,12 @@
+md5: e556c8b004606258a82316ee611fe4df
+frozen: true
+deps:
+- path: get-started/data.xml
+  repo:
+    url: https://github.com/iterative/dataset-registry
+    rev_lock: c172a9b59c7f30a5f83a87adb9296406676dfffa
 outs:
 - md5: 22a1a2931c8370d3aeedd7183606fd7f
   size: 14445097
   path: data.xml
-  desc: Initial XML StackOverflow dataset (raw data)
+  desc: Imported raw data (tracks source updates)
