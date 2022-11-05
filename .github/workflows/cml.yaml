@@ -18,6 +18,7 @@ jobs:
             PREVIOUS_REF=HEAD~1
           else
             PREVIOUS_REF=main
+            git fetch origin main
           fi
 
           dvc plots diff $PREVIOUS_REF workspace \
