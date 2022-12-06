@@ -1,0 +1,9 @@
+{
+  "name": "example-get-started",
+  "image": "mcr.microsoft.com/devcontainers/python:3.10",
+  "extensions": ["Iterative.dvc", "ms-python.python", "redhat.vscode-yaml"],
+  "features": {
+      "ghcr.io/iterative/features/dvc:1": {}
+  },
+  "postCreateCommand": "pip3 install --user -r src/requirements.txt"
+}
