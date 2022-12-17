@@ -60,27 +60,27 @@ stages:
     cmd: python src/evaluate.py model.pkl data/features
     deps:
     - path: data/features
-      md5: f8f5cbc3188008a7542d02d63054d9d2.dir
-      size: 1556290
+      md5: f35d4cc2c552ac959ae602162b8543f3.dir
+      size: 2232588
       nfiles: 2
     - path: model.pkl
-      md5: a2a31c9aef1ff2e4cfbf87308a2977c4
-      size: 1671034
+      md5: 337ac29ca551ff78f9df8d1e06bacef8
+      size: 1763779
     - path: src/evaluate.py
       md5: 753016f1791db6fe6808a9ff50002615
       size: 3289
     outs:
     - path: eval/importance.png
-      md5: b5928e1c65a51b406c0926e5e665c472
-      size: 29454
+      md5: e314a9456824e8ccd43317538a24e1b4
+      size: 34065
     - path: eval/live/metrics.json
-      md5: 8fe2847c56d1f6bdcbb9990a5b67a133
-      size: 194
+      md5: 97147dd5cb0e159c34152950b0bf1309
+      size: 195
     - path: eval/live/plots
-      md5: eaa8922a3c8e6f5626b6e36a202230e4.dir
-      size: 782296
+      md5: 540ff42c7acc694c29f9e8eaeec67d56.dir
+      size: 747259
       nfiles: 4
     - path: eval/prc
-      md5: 2328da0ae9768031791650adfb1061c9.dir
-      size: 295675
+      md5: 3b0e7c5a3aabe7a4d3bc0c37a4cfb3f3.dir
+      size: 297860
       nfiles: 2
