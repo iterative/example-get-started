@@ -3,6 +3,14 @@ artifacts:
     path: data/data.xml
     type: dataset
     desc: Initial XML StackOverflow dataset (raw data)
+  text-classification:
+    path: model.pkl
+    desc: Detect whether the given stackoverflow question should have R language tag
+    type: model
+    labels:
+    - nlp
+    - classification
+    - stackoverflow
 stages:
   prepare:
     cmd: python src/prepare.py data/data.xml
@@ -14,3 +22,24 @@ stages:
     - prepare.split
     outs:
     - data/prepared
+  featurize:
+    cmd: python src/featurization.py data/prepared data/features
+    deps:
+    - data/prepared
+    - src/featurization.py
+    params:
+    - featurize.max_features
+    - featurize.ngrams
+    outs:
+    - data/features
+  train:
+    cmd: python src/train.py data/features model.pkl
+    deps:
+    - data/features
+    - src/train.py
+    params:
+    - train.min_split
+    - train.n_est
+    - train.seed
+    outs:
+    - model.pkl
