@@ -1,0 +1,4 @@
+[core]
+    remote = public-s3
+['remote "public-s3"']
+    url = https://remote.dvc.org/get-started
