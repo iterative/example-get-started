@@ -1,0 +1,4 @@
+artifacts:
+  stackoverflow-dataset:
+    path: data/data.xml
+    desc: Initial XML StackOverflow dataset (raw data)
