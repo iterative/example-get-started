@@ -1,3 +1,10 @@
+md5: 9fc67bf9677b3f61d424cea6cf7c7053
+frozen: true
+deps:
+- path: get-started/data.xml
+  repo:
+    url: https://github.com/iterative/dataset-registry
+    rev_lock: 08c38bbea04e4f9e2130615dd679309ed0e11a72
 outs:
 - md5: 22a1a2931c8370d3aeedd7183606fd7f
   size: 14445097
