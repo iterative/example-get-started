@@ -1,0 +1,9 @@
+artifacts:
+  text-classification:
+    path: ../model.pkl
+    type: model
+    desc: Detect whether the given stackoverflow question has R language tag
+    labels:
+    - nlp
+    - classification
+    - stackoverflow
