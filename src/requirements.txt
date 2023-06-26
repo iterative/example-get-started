@@ -1,0 +1,6 @@
+dvclive>=2.0
+pandas
+pyaml
+scikit-learn
+scipy
+matplotlib
