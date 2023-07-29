@@ -1,0 +1,62 @@
+report:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+    - if: $CI_COMMIT_BRANCH == 'main'
+  image: dvcorg/cml:0-dvc3-base1  
+  before_script:
+    - cml ci && cml --version
+    - npm install -g json5
+  script: |
+    if [ $CI_COMMIT_REF_NAME = main ]; then
+      PREVIOUS_REF=HEAD~1
+      COMMIT_HASH1=$CI_COMMIT_BEFORE_SHA
+      COMMIT_HASH2=$CI_COMMIT_SHA
+    else
+      PREVIOUS_REF=main
+      git fetch --depth=1 origin main:main
+      COMMIT_HASH1=$CI_MERGE_REQUEST_DIFF_BASE_SHA
+      COMMIT_HASH2=$CI_COMMIT_SHA
+    fi
+
+    dvc pull eval
+    dvc plots diff $PREVIOUS_REF workspace \
+      --show-vega --targets ROC | json5 > vega.json
+    vl2svg vega.json roc.svg
+
+    dvc plots diff $PREVIOUS_REF workspace \
+      --show-vega --targets Precision-Recall | json5 > vega.json
+    vl2svg vega.json prc.svg
+
+    dvc plots diff $PREVIOUS_REF workspace \
+      --show-vega --targets Confusion-Matrix | json5 > vega.json
+    vl2svg vega.json confusion.svg
+
+    cp eval/plots/images/importance.png importance_workspace.png
+
+    git checkout $PREVIOUS_REF -- dvc.lock
+    cp eval/plots/images/importance.png importance_previous.png
+
+    dvc_report=$(dvc exp diff $PREVIOUS_REF --md)
+
+    cat <<EOF > report.md
+    # CML Report
+    [![DVC](https://img.shields.io/badge/-Open_in_Studio-grey?style=flat-square&logo=dvc)](https://studio.iterative.ai/team/Iterative/views/example-get-started-2gpv7kdqx2?panels=plots%2C%3Bcompare%2C&commits=${COMMIT_HASH2}%3B${COMMIT_HASH1}&activeCommits=${COMMIT_HASH1}%3Aprimary%3B${COMMIT_HASH2}%3Apurple)
+    ## Plots
+    ![ROC](./roc.svg)
+    ![Precision-Recall](./prc.svg)
+    ![Confusion Matrix](./confusion.svg)
+    #### Feature Importance: ${PREVIOUS_REF}
+    ![Feature Importance: ${PREVIOUS_REF}](./importance_previous.png)
+    #### Feature Importance: workspace
+    ![Feature Importance: workspace](./importance_workspace.png)
+
+    ## Metrics and Params
+    ### ${PREVIOUS_REF} → workspace
+    ${dvc_report}
+    EOF
+
+    if [ $CI_COMMIT_REF_NAME = main ]; then
+        cml comment create --target=commit report.md
+    else
+        cml comment update --target=pr report.md
+    fi
