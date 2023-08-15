@@ -3,3 +3,14 @@ artifacts:
     path: data/data.xml
     type: dataset
     desc: Initial XML StackOverflow dataset (raw data)
+stages:
+  prepare:
+    cmd: python src/prepare.py data/data.xml
+    deps:
+    - data/data.xml
+    - src/prepare.py
+    params:
+    - prepare.seed
+    - prepare.split
+    outs:
+    - data/prepared
