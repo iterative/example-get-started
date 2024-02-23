@@ -2,7 +2,7 @@
 
 # DVC Get Started
 
-This is an auto-generated repository for use in [DVC](https://dvc.org)
+This is a repository for use in [DVC](https://dvc.org)
 [Get Started](https://dvc.org/doc/get-started). It is a step-by-step quick
 introduction into basic DVC concepts.
 
@@ -21,7 +21,7 @@ classifier which can predict a post that is about the R language by tagging it
 Python 3.7+ is required to run code from this repo.
 
 ```console
-$ git clone https://github.com/iterative/example-get-started
+$ git clone https://github.com/mrbestnaija/example-get-started
 $ cd example-get-started
 ```
 
