@@ -8,7 +8,7 @@ introduction into basic DVC concepts.
 
 ![](https://static.iterative.ai/img/example-get-started/readme-head.png)
 
-The project is a natural language processing (NLP) binary classifier problem of
+The project is a Natural Language Processing (NLP) binary classifier problem of
 predicting tags for a given StackOverflow question. For example, we want one
 classifier which can predict a post that is about the R language by tagging it
 `R`.
