@@ -57,14 +57,14 @@ stages:
       size: 1666
     params:
       params.yaml:
-        train.min_split: 0.01
-        train.n_est: 50
+        train.min_split: 64
+        train.n_est: 100
         train.seed: 20170428
     outs:
     - path: model.pkl
       hash: md5
-      md5: d1f6e055f7f5e2827fcfae68d9b64d4c
-      size: 1958115
+      md5: bf3ed1a5e7b6a0b1b031ec52c1f08ca6
+      size: 4489653
   evaluate:
     cmd: python src/evaluate.py model.pkl data/features
     deps:
@@ -75,8 +75,8 @@ stages:
       nfiles: 2
     - path: model.pkl
       hash: md5
-      md5: d1f6e055f7f5e2827fcfae68d9b64d4c
-      size: 1958115
+      md5: bf3ed1a5e7b6a0b1b031ec52c1f08ca6
+      size: 4489653
     - path: src/evaluate.py
       hash: md5
       md5: a1a59f55636170fb56e0c6afd3e28fa4
@@ -84,6 +84,6 @@ stages:
     outs:
     - path: eval
       hash: md5
-      md5: 80a081570c800c60b9b98ca4b3c91dd7.dir
-      size: 1292342
+      md5: af6d0591c11a2c8f8048033fb730d08a.dir
+      size: 1270983
       nfiles: 8
