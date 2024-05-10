@@ -9,5 +9,5 @@ featurize:
 train:
   seed: 20170428
   n_est: 50
-  min_split: 0.01
+  min_split: 64
 
