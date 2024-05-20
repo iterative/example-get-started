@@ -1,5 +1,5 @@
 name: CML Report
-on: pull_request
+on: push
 jobs:
   run:
     runs-on: [ubuntu-latest]
@@ -43,7 +43,10 @@ jobs:
           cp eval/plots/images/importance.png importance_previous.png
 
           dvc_report=$(dvc exp diff $PREVIOUS_REF --md)
-
+      - uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
+      - run: |
           cat <<EOF > report.md
           # CML Report
           ## Plots
